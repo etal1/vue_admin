@@ -13,11 +13,14 @@ export const useCounterStore = defineStore("counter", {
       dialogFormVsible: false,
       addORup: false,
       form: {
-        id: "",
+        userid: "",
         username: "",
         password: "",
-        email: "",
-        mobile: ""
+        qq: "",
+        user_sex: "",
+        is_superuser: "",
+        stu_id: "",
+        personal_name: "",
       }
     };
   },
@@ -46,8 +49,10 @@ export const useCounterStore = defineStore("counter", {
     },
     //添加
     async addDataUser() {
-      let { data: res } = await axios.post("/users", this.form);
-      if (res.meta.status != 201) {
+      this.form.is_superuser == '管理员' ? this.form.is_superuser = 1 : this.form.is_superuser =0;
+      this.form.user_sex == '男' ? this.form.user_sex = 1 : this.form.user_sex =0;
+      let { data: res } = await axios.post("/adduser", this.form);
+      if (res.status != 201) {
         return ElMessage.error("Oops, this is a error message.");
       }
       ElMessage({
@@ -59,15 +64,24 @@ export const useCounterStore = defineStore("counter", {
     },
     //修改
     async updataUser() {
+      console.log(this.form)
+      this.form.is_superuser == '管理员' ? this.form.is_superuser = 1 : this.form.is_superuser =0;
+      this.form.user_sex == '男' ? this.form.user_sex = 1 : this.form.user_sex =0;
       let { data: res } = await axios({
-        method: "put",
-        url: "/users/" + this.form.id,
+        method: "post",
+        url: "/edituser",
         data: {
-          email: this.form.email,
-          mobile: this.form.mobile
+          username: this.form.username,
+          password: this.form.password,
+          qq: this.form.qq,
+          user_sex: this.form.user_sex,
+          personal_name: this.form.personal_name,
+          stu_id: this.form.stu_id,
+          is_superuser: this.form.is_superuser,
+          userid:this.form.userid,
         }
       });
-      if (res.meta.status != 200) return ElMessage.error("修改失败");
+      if (res.status != 200) return ElMessage.error("修改失败");
       ElMessage({
         message: "数据修改成功",
         type: "success"

@@ -5,7 +5,7 @@
     <el-radio-button :label="true">collapse</el-radio-button>
   </el-radio-group> -->
     <el-menu
-      default-active="2"
+      :default-active="mess.defaultActive"
       class="el-menu-vertical-demo"
       :collapse="mess.isCollapse"
       @select="handleSelect"
@@ -19,15 +19,10 @@
           <el-menu-item :index="(index+1)+'-'+(indexs+1)" v-for="(item,indexs) in item.children" :key="indexs+'1'">{{item.authName}}</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu> -->
-      <el-sub-menu>
-        <template #title>
-          <el-icon><location /></el-icon>
-          <span>dd</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item>ll</el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
+       <el-menu-item :index="(index+1)+''" v-for="(item,index) in mess.data" :key="index">
+          <el-icon><icon-menu /></el-icon>
+          <span>{{item}}</span>
+      </el-menu-item>
       <!-- <el-menu-item index="2">
         <el-icon><icon-menu /></el-icon>
         <template #title>Navigator Two</template>
@@ -46,8 +41,9 @@ import {
 import { useRouter } from "vue-router";
 const router = useRouter()
 let mess = reactive({
+  defaultActive:'1',
   isCollapse:false,
-  data:[]
+  data:["用户列表","文章列表","标签列表"]
 })
 
 // onMounted(async () =>{ 
@@ -58,12 +54,12 @@ let mess = reactive({
 // })
 
 const handleSelect = (res) => {
-  console.log(res == '1-1')
-  if(res == '1-1'){  router.push({path:'/userList'}) }
-  else if (res == '2-1') {router.push({path:'/userRoot'}) }
-  else if (res == '3-1') {router.push({path:'/shopList'}) }
-  else if (res == '4-1') {router.push({path:'/orderList'}) }
-  else if (res == '5-1') {router.push({path:'/erchaList'}) }
+  // console.log(res == '1-1')
+  if(res == '1'){  router.push({path:'/userList'});}
+  else if (res == '2') {router.push({path:'/contentList'}); }
+  else if (res == '3') {router.push({path:'/tagList'}); }
+  else if (res == '4') {router.push({path:'/orderList'}) }
+  else if (res == '5') {router.push({path:'/erchaList'}) }
 }
 </script>
 

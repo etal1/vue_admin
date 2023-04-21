@@ -4,7 +4,7 @@
     <div class="flex-row flex-js-spb mg-tb20 pd-lr20">
       <div>
         <span class="f30">总计：</span>
-        <span>{{store.pagetota}}条{{store.list}}</span>
+        <span>{{store.pagetota}}条</span>
       </div>
       <div class="flex-row flex-lg-nowrap flex-al-center">
         <el-input
@@ -12,9 +12,9 @@
           class="w-50 m-2 mg-r10"
           placeholder="Please Input"
           clearable
-          @clear="orderList()"
+          @clear="typeList()"
         />
-        <el-button @click="orderList()">Seach</el-button>
+        <el-button @click="typeList()">Seach</el-button>
       </div>
       <div class>
         <el-button type="success" @click="addUserData()">add</el-button>
@@ -23,41 +23,14 @@
         <!-- 添加框 -->
     <el-dialog v-model="store.dialogFormVsible" title="addUser">
       <el-form :model="store.form">
-      <el-form-item label="Zones" label-width="140px">
-        <el-select v-model="store.form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="用户名称" label-width="140px" v-if="!store.addORup">
-            <el-input v-model="store.form.username" autocomplete="off"/>
+      <el-form-item label="用户名称" label-width="140px">
+            <el-input v-model="store.form.type_name" autocomplete="off"/>
       </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="store.$patch({dialogFormVsible : false})">Cancel</el-button>
           <el-button type="primary" @click="isAddOrUpdata()">Confirm</el-button>
-        </span>
-      </template>
-    </el-dialog>
-        <!-- 添加框 -->
-    <el-dialog v-model="store.orderFormVsibles" title="addUser">
-      <el-form>
-      <el-form-item label="Zones" label-width="140px">
-          <el-timeline>
-            <el-timeline-item
-              v-for="(activity, index) in store.activities"
-              :key="index"
-              :timestamp="activity.time"
-            >
-              {{ activity.context }}
-            </el-timeline-item>
-          </el-timeline>
-      </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="store.$patch({orderFormVsibles : false})">Cancel</el-button>
         </span>
       </template>
     </el-dialog>
@@ -70,23 +43,12 @@
         :height="tableHeight"
         style="width: 100%"
       >
-        <el-table-column prop="order_id" label="ID" width="70"/>
-        <el-table-column prop="order_number" label="订单编号" />
-        <el-table-column prop="order_price" label="订单价格"/>
-        <el-table-column prop="pay_status" label="是否付款" >
-          <template #default="scope">
-              <el-tag class="ml-2" type="success" v-if="pay_status == 1">已支付</el-tag>
-             <el-tag class="ml-2" type="danger" v-else>未支付</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="is_send" label="是否发货" />
-        <el-table-column prop="create_time" label="下单时间" />
-        <!-- <el-table-column prop="username" label="用户名" width="100"/> -->
-        <!-- <el-table-column prop="username" label="用户名" width="100"/> -->
-        <el-table-column label="操作" align="center" width="150">
+        <el-table-column prop="type_id" label="ID" />
+        <el-table-column prop="type_name" label="类别" />
+        <el-table-column label="操作" align="center">
           <template #default="scope">
             <el-button size="small" @click="upUserData(scope.row)">Edit</el-button>
-            <el-button size="small" type="danger" @click="DelUser(scope.row.order_id)">物流</el-button>
+            <el-button size="small" type="danger" @click="DelUser(scope.row.type_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -100,7 +62,7 @@
         v-model:current-page="store.pagenum"
         layout="prev, pager, next"
         :total="store.pagetota"
-        @current-change="orderList()"
+        @current-change="typeList()"
       />
     </div>
   </div>
@@ -108,8 +70,8 @@
 
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import {useCounterStore} from "@/stores/orderList.ts"
-const store = useCounterStore();
+import {tagCounterStore} from "@/stores/tag.ts"
+const store = tagCounterStore();
 
 const tableRef = ref(null); //表格自适应大小使用
 const tableHeight = ref(); //表格自适应大小使用
@@ -120,32 +82,48 @@ onMounted(() => {
   window.onresize = () => {
     tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
   };
-  orderList();
+  typeList();
 });
 let mess = reactive({});
-const orderList = async () => {
-    store.orderList()
+const typeList = async () => {
+    store.typeList()
 };
 const isAddOrUpdata = async () => {
   // 因为修改添加用同一组件所以判断提交时是添加还是修改
   if(!store.addORup){
       // console.log("添加")
-  store.addDataUser()
+  store.addDatatype()
   }else{
-   store.updataUser()
+   store.updatatype()
   }
 };
 const DelUser =  (id) => {
-  store.$patch({orderFormVsibles : true})
-  store.oderStatus(id)
+       ElMessageBox.confirm(
+    '确定要删除该类型吗?',
+    'Warning',
+    {
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel',
+      type: 'warning',
+    }
+  ) .then(() => {
+   store.typeDel(id)
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Delete canceled',
+      })
+    })
+  // store.$patch({orderFormVsibles : true})
+  
 };
 const upUserData = (row) =>{
   store.$patch(state =>{
       state.addORup =true
       state.dialogFormVsible = true
-      state.form.email = row.email
-      state.form.mobile = row.mobile
-      state.form.id = row.id
+      state.form.type_name = row.type_name
+      state.form.id = row.type_id
   })
   
 }
@@ -154,10 +132,7 @@ const addUserData = (row) =>{
         state.addORup =false
         state.dialogFormVsible = true
           state.form = {
-          username:"",
-          password:"",
-          email:"" ,
-          mobile:""
+          type_name:"",
       }
   })
 

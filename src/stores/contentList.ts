@@ -7,7 +7,7 @@ export const useCounterStore = defineStore("orderLIst", {
       list: 75,
       input1: "",
       pagenum: 1,
-      pagesize: 5,
+      pagesize: 2,
       pagetota: 0,
       tableData: [],
       activities: [],
@@ -29,18 +29,19 @@ export const useCounterStore = defineStore("orderLIst", {
   actions: {
     //获取列表
     async orderList() {
-      let { data: res } = await axios.get("/orders", {
+      let { data: res } = await axios.get("/content/list", {
         params: {
-          query: this.input1,
-          pagenum: this.pagenum,
-          pagesize: this.pagesize
+          contTitle: this.input1,
+          page: this.pagenum,
+          pageSize: this.pagesize
         }
       });
-      if (res.meta.status == 200) {
-        // console.log(res.data);
-        this.tableData = res.data.goods;
-        this.pagetota = res.data.total;
-        this.pagenum = res.data.pagenum;
+      if (res.status == 200) {
+        console.log(res.data);
+        this.tableData = res.data.data;
+        this.pagetota = res.data.total        ;
+        this.pagenum = res.data.current_page
+        ;
       }
     },
     //添加
@@ -66,7 +67,7 @@ export const useCounterStore = defineStore("orderLIst", {
           mobile: this.form.mobile
         }
       });
-      if (res.meta.status != 200) return ElMessage.error("修改失败");
+      if (res.status != 200) return ElMessage.error("修改失败");
       ElMessage({
         message: "数据修改成功",
         type: "success"
@@ -74,17 +75,24 @@ export const useCounterStore = defineStore("orderLIst", {
       this.useList();
       this.dialogFormVsible = false;
     },
-    //获取订单状态
-    async oderStatus(id) {
+    //删除文章
+    async contentDel(id) {
       console.log(id);
-      let { data: res } = await axios({
-        method: "get",
-        url: "/kuaidi/" + id
-      });
-      if (res.meta.status != 200) {
+      let { data: res } = await axios.get(
+       "/content/del" ,{
+         params:{
+          contentId :id
+         }
+       }
+      );
+      if (res.status != 200) {
         return ElMessage.error("获取失败失败");
       }
-      this.activities = res.data
+      ElMessage({
+        message: "数据删除成功",
+        type: "success"
+      });
+      this.orderList();
       
       // this.useList();
     }

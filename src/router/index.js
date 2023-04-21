@@ -8,9 +8,9 @@ let routes= [
     redirect:"/userList",
     children:[
       {path:"/userList",component: () => import('../views/useList/useList.vue')},
-      {path:"/userRoot",component: () => import('../views/useRoot/rootList.vue')},
+      {path:"/tagList",component: () => import('../views/tag/tag.vue')},
       {path:"/shopList",component: () => import('../views/shop/shopList.vue')},
-      {path:"/orderList",component: () => import('../views/order/orderList.vue')},
+      {path:"/contentList",component: () => import('../views/content/contentList.vue')},
     ],
     component:  () => import('../views/index.vue')
   },

@@ -12,44 +12,26 @@
           class="w-50 m-2 mg-r10"
           placeholder="Please Input"
           clearable
-          @clear="useList()"
+          @clear="orderList()"
         />
-        <el-button @click="useList()">Seach</el-button>
+        <el-button @click="orderList()">Seach</el-button>
       </div>
       <div class>
         <el-button type="success" @click="addUserData()">add</el-button>
       </div>
     </div>
         <!-- 添加框 -->
-    <el-dialog v-model="store.dialogFormVsible" title="addUser" >
-      <el-form :model="store.form" label-width="120px">
-        <el-form-item label="账号" label-width="140px">
+    <!-- <el-dialog v-model="store.dialogFormVsible" title="addUser">
+      <el-form :model="store.form">
+      <el-form-item label="Zones" label-width="140px">
+        <el-select v-model="store.form.region" placeholder="Please select a zone">
+          <el-option label="Zone No.1" value="shanghai" />
+          <el-option label="Zone No.2" value="beijing" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="用户名称" label-width="140px" v-if="!store.addORup">
             <el-input v-model="store.form.username" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="密码" label-width="140px">
-            <el-input v-model="store.form.password" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="权限">
-          <el-radio-group v-model="store.form.is_superuser">
-            <el-radio label="普通用户" />
-            <el-radio label="管理员" />
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="QQ" label-width="140px">
-          <el-input v-model="store.form.qq" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="store.form.user_sex">
-            <el-radio label="男" />
-            <el-radio label="女" />
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="学号" label-width="140px">
-          <el-input v-model="store.form.stu_id" autocomplete="off"/>
-        </el-form-item>
-        <el-form-item label="姓名" label-width="140px">
-          <el-input v-model="store.form.personal_name" autocomplete="off"/>
-        </el-form-item>
+      </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -57,7 +39,28 @@
           <el-button type="primary" @click="isAddOrUpdata()">Confirm</el-button>
         </span>
       </template>
-    </el-dialog>
+    </el-dialog> -->
+        <!-- 添加框 -->
+    <!-- <el-dialog v-model="store.orderFormVsibles" title="addUser">
+      <el-form>
+      <el-form-item label="Zones" label-width="140px">
+          <el-timeline>
+            <el-timeline-item
+              v-for="(activity, index) in store.activities"
+              :key="index"
+              :timestamp="activity.time"
+            >
+              {{ activity.context }}
+            </el-timeline-item>
+          </el-timeline>
+      </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="store.$patch({orderFormVsibles : false})">Cancel</el-button>
+        </span>
+      </template>
+    </el-dialog> -->
     <!-- 列表内容 -->
     <div class="list">
       <el-table
@@ -67,27 +70,23 @@
         :height="tableHeight"
         style="width: 100%"
       >
-        <el-table-column prop="userid" label="ID" width="70"/>
-        <el-table-column prop="username" label="账号" />
-        <el-table-column prop="password" label="密码" />
-        <el-table-column prop="is_superuser" label="权限" >
+        <el-table-column prop="essay_id" label="ID" width="70"/>
+        <el-table-column prop="essay_title" label="文章标题" />
+        <el-table-column prop="userid" label="创建文章ID"/>
+        <el-table-column prop="essay_status" label="是否发布" >
           <template #default="scope">
-              {{scope.row.is_superuser == 1 ? '管理员' : '普通用户' }}
+              <el-tag class="ml-2" type="success" v-if="scope.row.essay_status == 1">已发布</el-tag>
+             <el-tag class="ml-2" type="danger" v-else>未发布</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="qq" label="QQ"/>
-        <el-table-column prop="user_sex" label="性别" >
-          <template #default="scope">
-              {{scope.row.user_sex == 1 ? '男' : '女' }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="stu_id" label="学号"/>
+        <!-- <el-table-column prop="is_send" label="是否发货" />
+        <el-table-column prop="create_time" label="下单时间" /> -->
         <!-- <el-table-column prop="username" label="用户名" width="100"/> -->
-        <el-table-column prop="personal_name" label="姓名" />
+        <!-- <el-table-column prop="username" label="用户名" width="100"/> -->
         <el-table-column label="操作" align="center" width="150">
           <template #default="scope">
             <el-button size="small" @click="upUserData(scope.row)">Edit</el-button>
-            <el-button size="small" type="danger" @click="DelUser(scope.row.userid)">Delete</el-button>
+            <el-button size="small" type="danger" @click="DelUser(scope.row.essay_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +100,7 @@
         v-model:current-page="store.pagenum"
         layout="prev, pager, next"
         :total="store.pagetota"
-        @current-change="useList()"
+        @current-change="orderList()"
       />
     </div>
   </div>
@@ -109,7 +108,7 @@
 
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import {useCounterStore} from "@/stores/useList.ts"
+import {useCounterStore} from "@/stores/contentList.ts"
 const store = useCounterStore();
 
 const tableRef = ref(null); //表格自适应大小使用
@@ -121,11 +120,11 @@ onMounted(() => {
   window.onresize = () => {
     tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
   };
-  useList();
+  orderList();
 });
 let mess = reactive({});
-const useList = async () => {
-    store.useList()
+const orderList = async () => {
+    store.orderList()
 };
 const isAddOrUpdata = async () => {
   // 因为修改添加用同一组件所以判断提交时是添加还是修改
@@ -137,7 +136,7 @@ const isAddOrUpdata = async () => {
   }
 };
 const DelUser =  (id) => {
-      ElMessageBox.confirm(
+       ElMessageBox.confirm(
     '确定要删除吗?',
     'Warning',
     {
@@ -146,7 +145,7 @@ const DelUser =  (id) => {
       type: 'warning',
     }
   ) .then(() => {
-   store.deleUser(id)
+   store.contentDel(id)
     })
     .catch(() => {
       ElMessage({
@@ -154,38 +153,31 @@ const DelUser =  (id) => {
         message: 'Delete canceled',
       })
     })
+  // store.$patch({orderFormVsibles : true})
+  
 };
 const upUserData = (row) =>{
-  console.log(row)
   store.$patch(state =>{
       state.addORup =true
       state.dialogFormVsible = true
-      state.form.username = row.username
-      state.form.password = row.password
-      state.form.qq = row.qq
-      state.form.user_sex = row.user_sex == 1 ? '男' : '女'
-      state.form.is_superuser = row.is_superuser == 1 ? '管理员' : '普通用户'
-      state.form.stu_id = row.stu_id
-      state.form.personal_name = row.personal_name
-      state.form.userid = row.userid
+      state.form.email = row.email
+      state.form.mobile = row.mobile
+      state.form.id = row.id
   })
   
 }
 const addUserData = (row) =>{
-    store.$patch(state =>{
-        state.addORup =false
-        state.dialogFormVsible = true
-          state.form = {
-              username: "",
-              password: "",
-              qq: "",
-              user_sex: "",
-              is_superuser: "",
-              stu_id: "",
-              personal_name: "",
-      }
-  })
-
+  //   store.$patch(state =>{
+  //       state.addORup =false
+  //       state.dialogFormVsible = true
+  //         state.form = {
+  //         username:"",
+  //         password:"",
+  //         email:"" ,
+  //         mobile:""
+  //     }
+  // })
+  router.push({path:'/contentList/add'});
 }
 </script>
 <style scoped>
