@@ -110,7 +110,8 @@
 import { reactive, ref, onMounted } from "vue";
 import {useCounterStore} from "@/stores/contentList.ts"
 const store = useCounterStore();
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 const tableRef = ref(null); //表格自适应大小使用
 const tableHeight = ref(); //表格自适应大小使用
 onMounted(() => {
