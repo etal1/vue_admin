@@ -4,7 +4,7 @@ import axios from "axios";
 import App from './App.vue'
 import router from './router'
 import './assets/style.css' 
-axios.defaults.baseURL ="/api/php_admin/public/index.php"
+axios.defaults.baseURL ="/api/laravel10.6.2/public"
 // axios.interceptors.request.use(config =>{
 //     config.headers.Authorization = window.sessionStorage.getItem("token")
 //     return config

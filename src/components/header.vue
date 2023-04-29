@@ -12,9 +12,12 @@
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
+import axios from "axios";
 const router = useRouter()
-const outLogin = () =>{
-      window.sessionStorage.removeItem("token");
+const  outLogin = async () =>{
+      // window.sessionStorage.removeItem("token");
+      let dd = window.sessionStorage.getItem("token");
+      await axios.post("/logout",dd);
       router.push({ path:"/login"})
 }
 </script>

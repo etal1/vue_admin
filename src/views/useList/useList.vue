@@ -24,7 +24,7 @@
     <el-dialog v-model="store.dialogFormVsible" title="addUser" >
       <el-form :model="store.form" label-width="120px">
         <el-form-item label="账号" label-width="140px">
-            <el-input v-model="store.form.username" autocomplete="off"/>
+            <el-input v-model="store.form.name" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="密码" label-width="140px">
             <el-input v-model="store.form.password" autocomplete="off"/>
@@ -67,8 +67,8 @@
         :height="tableHeight"
         style="width: 100%"
       >
-        <el-table-column prop="userid" label="ID" width="70"/>
-        <el-table-column prop="username" label="账号" />
+        <el-table-column prop="id" label="ID" width="70"/>
+        <el-table-column prop="name" label="账号" />
         <el-table-column prop="password" label="密码" />
         <el-table-column prop="is_superuser" label="权限" >
           <template #default="scope">
@@ -160,14 +160,14 @@ const upUserData = (row) =>{
   store.$patch(state =>{
       state.addORup =true
       state.dialogFormVsible = true
-      state.form.username = row.username
+      state.form.name = row.name
       state.form.password = row.password
       state.form.qq = row.qq
       state.form.user_sex = row.user_sex == 1 ? '男' : '女'
       state.form.is_superuser = row.is_superuser == 1 ? '管理员' : '普通用户'
       state.form.stu_id = row.stu_id
       state.form.personal_name = row.personal_name
-      state.form.userid = row.userid
+      state.form.id = row.id
   })
   
 }
@@ -176,7 +176,7 @@ const addUserData = (row) =>{
         state.addORup =false
         state.dialogFormVsible = true
           state.form = {
-              username: "",
+              name: "",
               password: "",
               qq: "",
               user_sex: "",

@@ -55,7 +55,7 @@ export default {
     minLength:200,
     }
     editorConfig.MENU_CONF['uploadImage'] = {
-     server: '/api/php_admin/public/index.php/type/imgUp',
+     server: '/api/laravel10.6.2/public/type/imgUp',
        fieldName:'image',
     // server:'http://192.168.178.44:8888/upImage',//后台服务器地址
       maxFileSize: 6 * 1024 * 1024, //

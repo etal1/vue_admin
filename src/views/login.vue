@@ -8,18 +8,18 @@ const formSize = ref('default')
 const ruleFormRef = ref()
 
 const ruleForm = reactive({
-  name: "",
+  email: "",
   password:""
 })
 
 const rules = reactive({
-  name: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 6, message: 'Length should be 3 to 6', trigger: 'blur' },
-  ],
+  // name: [
+  //   { required: true, message: 'Please input Activity name', trigger: 'blur' },
+  //   { min: 3, max: 6, message: 'Length should be 3 to 6', trigger: 'blur' },
+  // ],
   password: [
        { required: true, message: 'Please input password', trigger: 'blur' },
-      { min: 3, max: 6, message: 'Length should be 3 to 6', trigger: 'blur' },
+      { min: 3, max: 10, message: 'Length should be 3 to 6', trigger: 'blur' },
   ],
  
 })
@@ -29,8 +29,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate(async(valid, fields) => {
     if (valid) {
        let {data:res}  = 
-       await axios.post( "/lact",
-         { user: ruleForm.name, pwd: ruleForm.password },)
+       await axios.post( "/login",
+         { email: ruleForm.email, password: ruleForm.password },)
          if(res.status != 200) return ElMessage.error('账号或者密码错误');
            console.log(res)
           //  window.sessionStorage.setItem("token",res.data.token);
@@ -62,7 +62,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
         status-icon
       >
         <el-form-item label="user name" prop="name">
-          <el-input v-model="ruleForm.name"/>
+          <el-input v-model="ruleForm.email"/>
         </el-form-item>
         <el-form-item label="password" prop="password">
           <el-input v-model="ruleForm.password"/>
