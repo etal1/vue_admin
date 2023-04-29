@@ -72,7 +72,7 @@
 import { reactive, ref, onMounted } from "vue";
 import {tagCounterStore} from "@/stores/tag.ts"
 const store = tagCounterStore();
-
+// console.log(store)
 const tableRef = ref(null); //表格自适应大小使用
 const tableHeight = ref(); //表格自适应大小使用
 onMounted(() => {

@@ -14,13 +14,6 @@
         @onChange="Changedata"
         @onCreated="handleCreated"
       />
-      <div style="margin-top: 10px">
-      <textarea
-        v-model="valueHtml"
-        readonly
-        style="width: 100%; height: 200px; outline: none"
-      ></textarea>
-    </div>
     </div>
 </template>
 <script>
@@ -43,7 +36,7 @@ export default {
     const editorRef = shallowRef()
     console.log(props.content)
     // 内容 HTML
-    const valueHtml = ""
+    const valueHtml = props.content
 
     // 模拟 ajax 异步获取内容
     onMounted(() => {
@@ -53,7 +46,24 @@ export default {
     })
 
     const toolbarConfig = {}
-    const editorConfig = { placeholder: '请输入内容...' }
+    const editorConfig = {
+      MENU_CONF:{} ,
+      withCredentials:true,//定义该属性为ture表示允许跨域访问
+    autofocus:false,
+    scroll:true,
+    // maxLength:10200,
+    minLength:200,
+    }
+    editorConfig.MENU_CONF['uploadImage'] = {
+     server: '/api/php_admin/public/index.php/type/imgUp',
+       fieldName:'image',
+    // server:'http://192.168.178.44:8888/upImage',//后台服务器地址
+      maxFileSize: 6 * 1024 * 1024, //
+      maxNumberOfFiles: 200,
+    // allowedFileTypes: ['image/*'],
+    // timeout: 20 * 1000, // 5 秒
+
+}
 
     // 组件销毁时，也及时销毁编辑器
     onBeforeUnmount(() => {

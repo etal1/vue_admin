@@ -20,47 +20,7 @@
         <el-button type="success" @click="addUserData()">add</el-button>
       </div>
     </div>
-        <!-- 添加框 -->
-    <!-- <el-dialog v-model="store.dialogFormVsible" title="addUser">
-      <el-form :model="store.form">
-      <el-form-item label="Zones" label-width="140px">
-        <el-select v-model="store.form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="用户名称" label-width="140px" v-if="!store.addORup">
-            <el-input v-model="store.form.username" autocomplete="off"/>
-      </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="store.$patch({dialogFormVsible : false})">Cancel</el-button>
-          <el-button type="primary" @click="isAddOrUpdata()">Confirm</el-button>
-        </span>
-      </template>
-    </el-dialog> -->
-        <!-- 添加框 -->
-    <!-- <el-dialog v-model="store.orderFormVsibles" title="addUser">
-      <el-form>
-      <el-form-item label="Zones" label-width="140px">
-          <el-timeline>
-            <el-timeline-item
-              v-for="(activity, index) in store.activities"
-              :key="index"
-              :timestamp="activity.time"
-            >
-              {{ activity.context }}
-            </el-timeline-item>
-          </el-timeline>
-      </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="store.$patch({orderFormVsibles : false})">Cancel</el-button>
-        </span>
-      </template>
-    </el-dialog> -->
+    <!-- 添加框 -->
     <!-- 列表内容 -->
     <div class="list">
       <el-table
@@ -158,26 +118,34 @@ const DelUser =  (id) => {
   
 };
 const upUserData = (row) =>{
+  
   store.$patch(state =>{
       state.addORup =true
-      state.dialogFormVsible = true
-      state.form.email = row.email
-      state.form.mobile = row.mobile
-      state.form.id = row.id
+      // state.dialogFormVsible = true
+       state.form.essay_title=row.essay_title ,
+        state.form.essay_content=row.essay_content ,
+        state.form.type_id=row.type_id,
+        state.form.essay_status=row.essay_status,
+         row.essay_status ==1 ? state.form.delivery =true :state.form.delivery =false
+        // state.form.essay_status=row.essay_status
+      // state.form.email = row.email
+      // state.form.mobile = row.mobile
+      state.form.id = row.essay_id
   })
-  
+   router.push({path:'/contentList/add'});
 }
 const addUserData = (row) =>{
-  //   store.$patch(state =>{
-  //       state.addORup =false
-  //       state.dialogFormVsible = true
-  //         state.form = {
-  //         username:"",
-  //         password:"",
-  //         email:"" ,
-  //         mobile:""
-  //     }
-  // })
+    store.$patch(state =>{
+        state.addORup =false
+        // state.dialogFormVsible = true
+          state.form = {
+            essay_title: "",
+            essay_content:"",
+            type_id:"",
+            essay_status:"",
+            delivery:false
+      }
+  })
   router.push({path:'/contentList/add'});
 }
 </script>
