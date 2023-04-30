@@ -8,7 +8,7 @@ export const useCounterStore = defineStore("orderLIst", {
       // list: 75,
       input1: "",  //搜索框
       pagenum: 1,
-      pagesize: 2,
+      pagesize: 8,
       pagetota: 0,
       tableData: [], //显示列表
       activities: [],
@@ -22,6 +22,7 @@ export const useCounterStore = defineStore("orderLIst", {
         type_id:"",//类型
         essay_status:'',//是否发布是实际发送给数据库的
         delivery:false,//是否发布是页面展示
+        brief:"",
 
       }
     };
@@ -36,7 +37,7 @@ export const useCounterStore = defineStore("orderLIst", {
     async orderList() {
       let { data: res } = await axios.get("/content/list", {
         params: {
-          contTitle: this.input1,
+          essay_title: this.input1,
           page: this.pagenum,
           pageSize: this.pagesize
         }

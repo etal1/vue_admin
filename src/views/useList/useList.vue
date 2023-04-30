@@ -26,6 +26,9 @@
         <el-form-item label="账号" label-width="140px">
             <el-input v-model="store.form.name" autocomplete="off"/>
         </el-form-item>
+        <el-form-item label="邮箱" label-width="140px">
+            <el-input v-model="store.form.email" autocomplete="off"/>
+        </el-form-item>
         <el-form-item label="密码" label-width="140px">
             <el-input v-model="store.form.password" autocomplete="off"/>
         </el-form-item>
@@ -87,7 +90,7 @@
         <el-table-column label="操作" align="center" width="150">
           <template #default="scope">
             <el-button size="small" @click="upUserData(scope.row)">Edit</el-button>
-            <el-button size="small" type="danger" @click="DelUser(scope.row.userid)">Delete</el-button>
+            <el-button size="small" type="danger" @click="DelUser(scope.row.id)">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -33,7 +33,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
          { email: ruleForm.email, password: ruleForm.password },)
          if(res.status != 200) return ElMessage.error('账号或者密码错误');
            console.log(res)
-          //  window.sessionStorage.setItem("token",res.data.token);
+           window.sessionStorage.setItem("token",res.authorisation.token);
            router.push({ path:"/"})
     } else {
       console.log('error submit!', fields)

@@ -17,8 +17,11 @@ const router = useRouter()
 const  outLogin = async () =>{
       // window.sessionStorage.removeItem("token");
       let dd = window.sessionStorage.getItem("token");
-      await axios.post("/logout",dd);
-      router.push({ path:"/login"})
+      await axios.post("/logout",{token:dd}).then(() =>{
+        window.sessionStorage.removeItem("token");
+           router.push({ path:"/login"})
+      });
+    
 }
 </script>
 

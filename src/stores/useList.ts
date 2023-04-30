@@ -13,14 +13,15 @@ export const useCounterStore = defineStore("counter", {
       dialogFormVsible: false,
       addORup: false,
       form: {
-        userid: "",
-        username: "",
+        id: "",
+        name: "",
         password: "",
         qq: "",
         user_sex: "",
         is_superuser: "",
         stu_id: "",
         personal_name: "",
+        email:"",
       }
     };
   },
@@ -34,7 +35,7 @@ export const useCounterStore = defineStore("counter", {
     async useList() {
       let { data: res } = await axios.get("/userlist", {
         params: {
-          username: this.input1,
+          name: this.input1,
           page: this.pagenum,
           pageSize: this.pagesize
         }
@@ -71,14 +72,15 @@ export const useCounterStore = defineStore("counter", {
         method: "post",
         url: "/edituser",
         data: {
-          username: this.form.username,
+          name: this.form.name,
           password: this.form.password,
+          email: this.form.email,
           qq: this.form.qq,
           user_sex: this.form.user_sex,
           personal_name: this.form.personal_name,
           stu_id: this.form.stu_id,
           is_superuser: this.form.is_superuser,
-          userid:this.form.userid,
+          id:this.form.id,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");
@@ -94,7 +96,7 @@ export const useCounterStore = defineStore("counter", {
       console.log(id);
       let { data: res } = await axios.get("/deluser", {
         params: {
-          userid: id,
+          id: id,
         }
       });
   
