@@ -51,7 +51,7 @@ export const useCounterStore = defineStore("indexContent", {
 
     //获取列表
     async orderList() {
-      let { data: res } = await axios.get("/content/list", {
+      let { data: res } = await axios.get("indexContent", {
         params: {
           essay_title: this.input1,
           page: this.pagenum,
@@ -68,8 +68,8 @@ export const useCounterStore = defineStore("indexContent", {
     },
     //添加
     async addDataContent() {
-      let { data: res } = await axios.post("/content/add", this.form);
-      if (res.meta.status != 201) {
+      let { data: res } = await axios.post("indexContent/add", this.form);
+      if (res.status != 200) {
         return ElMessage.error("Oops, this is a error message.");
       }
       ElMessage({
@@ -82,7 +82,7 @@ export const useCounterStore = defineStore("indexContent", {
     async updataContent() {
       let { data: res } = await axios({
         method: "post",
-        url: "/content/edit",
+        url: "indexContent/edit",
         data: {
           essay_title: this.form.essay_title,
           essay_content: this.form.essay_content,
@@ -102,7 +102,7 @@ export const useCounterStore = defineStore("indexContent", {
     async contentDel(id) {
       console.log(id);
       let { data: res } = await axios.get(
-       "/content/del" ,{
+       "indexContent/del" ,{
          params:{
           contentId :id
          }

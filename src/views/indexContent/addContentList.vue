@@ -1,8 +1,7 @@
 <template>
-  <div>1</div>
   <div class="wangEditor">
     <!-- <img src="http://localhost:5137/93290262-ac70-4004-bee5-66ccfff5dbc7" /> -->
-    <el-form :model="store.form" label-width="130px">
+    <el-form :model="store.form" label-width="80px">
       <el-form-item label="标题">
         <el-input v-model="store.form.essay_title" maxlength="50"/>
       </el-form-item>
@@ -36,8 +35,10 @@
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
   </el-upload> -->
+    <div class="wangEditors">
       <div v-html="store.form.essay_content"></div>
       <wangEditor @changeData="changeMess" :content= store.form.essay_content />
+    </div>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">提交</el-button>
         <el-button>返回</el-button>
@@ -156,5 +157,8 @@ const onSubmit = async () => {3
   width: 178px;
   height: 178px;
   text-align: center;
+}
+.wangEditors{
+  
 }
 </style>
