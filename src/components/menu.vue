@@ -43,7 +43,7 @@ const router = useRouter()
 let mess = reactive({
   defaultActive:'1',
   isCollapse:false,
-  data:["用户列表","文章列表","标签列表","首页展示"]
+  data:["用户列表","文章列表","标签列表","首页展示","轮播展示"]
 })
 
 // onMounted(async () =>{ 
@@ -59,7 +59,7 @@ const handleSelect = (res) => {
   else if (res == '2') {router.push({path:'/contentList'}); }
   else if (res == '3') {router.push({path:'/tagList'}); }
   else if (res == '4') {router.push({path:'/indexContent'}) }
-  else if (res == '5') {router.push({path:'/erchaList'}) }
+  else if (res == '5') {router.push({path:'/carousel'}) }
 }
 </script>
 
