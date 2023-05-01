@@ -53,7 +53,7 @@ export const useCounterStore = defineStore("counter", {
       this.form.is_superuser == '管理员' ? this.form.is_superuser = 1 : this.form.is_superuser =0;
       this.form.user_sex == '男' ? this.form.user_sex = 1 : this.form.user_sex =0;
       let { data: res } = await axios.post("/adduser", this.form);
-      if (res.status != 201) {
+      if (res.status != 200) {
         return ElMessage.error("Oops, this is a error message.");
       }
       ElMessage({

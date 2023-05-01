@@ -24,6 +24,7 @@ export const useCounterStore = defineStore("orderLIst", {
         delivery:false,//是否发布是页面展示
         brief:"",
         home_image:"",//首页封面图片
+        essay_brief:"",//简介
 
       }
     };
@@ -91,6 +92,7 @@ export const useCounterStore = defineStore("orderLIst", {
           essay_status: this.form.essay_status,
           essay_id: this.form.id,
           home_image: this.form.home_image,
+          essay_brief: this.form.essay_brief,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");

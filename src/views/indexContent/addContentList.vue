@@ -6,7 +6,7 @@
         <el-input v-model="store.form.essay_title" maxlength="50"/>
       </el-form-item>
       <el-form-item label="简介">
-        <el-input v-model="store.form.brief" maxlength="50"/>
+        <el-input v-model="store.form.essay_brief" maxlength="50"/>
       </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="store.form.type_id" placeholder="please select your zone">
