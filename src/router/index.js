@@ -12,7 +12,7 @@ let routes= [
       {path:"/shopList",component: () => import('../views/shop/shopList.vue')},
       {path:"/contentList",component: () => import('../views/content/contentList.vue')},
       {path:"/contentList/add",component: () => import('../views/content/addContentList.vue')},
-      {path:"/indexContent",component: () => import('../views/indexContent/ContentList.vue')},
+      {path:"/indexContent",component: () => import('../views/indexContent/contentList.vue')},
       {path:"/indexContent/add",component: () => import('../views/indexContent/addContentList.vue')},
     ],
     component:  () => import('../views/index.vue')

@@ -1,6 +1,7 @@
 <template>
   <div class="listBa">
     <!-- 搜索部分 -->
+  <!-- <div>sj</div> -->
     <div class="flex-row flex-js-spb mg-tb20 pd-lr20">
       <div>
         <span class="f30">总计：</span>
@@ -68,7 +69,7 @@
 
 <script setup>
 import { reactive, ref, onMounted } from "vue";
-import {useCounterStore} from "@/stores/contentList.ts"
+import {useCounterStore} from "@/stores/indexContent.ts"
 const store = useCounterStore();
 import { useRouter } from "vue-router";
 const router = useRouter()
@@ -132,7 +133,7 @@ const upUserData = (row) =>{
       // state.form.mobile = row.mobile
       state.form.id = row.essay_id
   })
-   router.push({path:'/contentList/add'});
+   router.push({path:'/indexContent/add'});
 }
 const addUserData = (row) =>{
     store.$patch(state =>{
@@ -146,7 +147,7 @@ const addUserData = (row) =>{
             delivery:false
       }
   })
-  router.push({path:'/contentList/add'});
+  router.push({path:'/indexContent/add'});
 }
 </script>
 <style scoped>

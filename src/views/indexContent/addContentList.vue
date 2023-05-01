@@ -1,6 +1,7 @@
 <template>
+  <div>1</div>
   <div class="wangEditor">
-    <img src="http://localhost:5137/93290262-ac70-4004-bee5-66ccfff5dbc7" />
+    <!-- <img src="http://localhost:5137/93290262-ac70-4004-bee5-66ccfff5dbc7" /> -->
     <el-form :model="store.form" label-width="130px">
       <el-form-item label="标题">
         <el-input v-model="store.form.essay_title" maxlength="50"/>
@@ -14,10 +15,18 @@
           <!-- <el-option label="Zone two" value="beijing" /> -->
         </el-select>
       </el-form-item>
-      <el-form-item label="Instant delivery">
+      <el-form-item label="是否发布">
       <el-switch v-model="store.form.delivery" @change="changeDelivery" />
     </el-form-item>
-    <el-upload
+
+    <div>
+          <input class="imgIcon" type="file" ref="fileInput" @change="store.uploadImage">
+          <div v-if="store.form.image">
+            <img :src="store.form.image" alt="Uploaded image" width="250" height="250">
+          </div>
+    </div>
+
+    <!-- <el-upload
     class="avatar-uploader"
     action="/api/laravel10.6.2/public/content/homeimage"
     :show-file-list="false"
@@ -26,7 +35,7 @@
   >
     <img v-if="imageUrl" :src="imageUrl" class="avatar" />
     <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-  </el-upload>
+  </el-upload> -->
       <div v-html="store.form.essay_content"></div>
       <wangEditor @changeData="changeMess" :content= store.form.essay_content />
       <el-form-item>
@@ -44,7 +53,7 @@ import { Plus } from '@element-plus/icons-vue';
 import type { UploadProps } from 'element-plus';
 import { RouterLink, RouterView } from "vue-router";
 import wangEditor from "../../components/wangEditor.vue";
-import { useCounterStore } from "@/stores/contentList.ts";
+import { useCounterStore } from "@/stores/indexContent.ts";
 import axios from "axios";
 const store = useCounterStore();
 

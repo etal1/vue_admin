@@ -2,7 +2,7 @@ import { computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import { tr } from "element-plus/es/locale";
-export const useCounterStore = defineStore("orderLIst", {
+export const useCounterStore = defineStore("indexContent", {
   state: () => {
     return {
       // list: 75,
@@ -23,8 +23,7 @@ export const useCounterStore = defineStore("orderLIst", {
         essay_status:'',//是否发布是实际发送给数据库的
         delivery:false,//是否发布是页面展示
         brief:"",
-        home_image:"",//首页封面图片
-
+        image:"",//首页封面图片
       }
     };
   },
@@ -36,16 +35,16 @@ export const useCounterStore = defineStore("orderLIst", {
   actions: {
 
  //封面图片
- async uploadImage(event){
-  console.log("2762")
+ uploadImage(event){
   const file = event.target.files[0];
   const formData = new FormData();
   formData.append('image', file);
   // console.log(formData)
-  await axios.post('/type/imgUp', formData).then(res => {
-      console.log(res.data.data.url)
-     this.form.home_image = res.data.data.url;
-     console.log(this.form.home_image)
+  axios.post('type/imgUp', formData)
+    .then(res => {
+    console.log(res.data.data)
+     this.form.image = res.data.data.url;
+     console.log(this.form.image)
     })
 },
 
@@ -70,7 +69,7 @@ export const useCounterStore = defineStore("orderLIst", {
     //添加
     async addDataContent() {
       let { data: res } = await axios.post("/content/add", this.form);
-      if (res.status != 200) {
+      if (res.meta.status != 201) {
         return ElMessage.error("Oops, this is a error message.");
       }
       ElMessage({
@@ -90,7 +89,6 @@ export const useCounterStore = defineStore("orderLIst", {
           type_id: this.form.type_id,
           essay_status: this.form.essay_status,
           essay_id: this.form.id,
-          home_image: this.form.home_image,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");
