@@ -6,7 +6,7 @@
         <el-input v-model="store.form.essay_title" maxlength="50"/>
       </el-form-item>
       <el-form-item label="简介">
-        <el-input v-model="store.form.brief" maxlength="50"/>
+        <el-input v-model="store.form.essay_brief" maxlength="50"/>
       </el-form-item>
       <el-form-item label="类型">
         <el-select v-model="store.form.type_id" placeholder="please select your zone">
@@ -20,8 +20,8 @@
 
     <div>
           <input class="imgIcon" type="file" ref="fileInput" @change="store.uploadImage">
-          <div v-if="store.form.image">
-            <img :src="store.form.image" alt="Uploaded image" width="250" height="250">
+          <div v-if="store.form.home_image">
+            <img :src="store.form.home_image" alt="Uploaded image" width="250" height="250">
           </div>
     </div>
 

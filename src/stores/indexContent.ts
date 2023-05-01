@@ -23,7 +23,7 @@ export const useCounterStore = defineStore("indexContent", {
         essay_status:'',//是否发布是实际发送给数据库的
         delivery:false,//是否发布是页面展示
         brief:"",
-        image:"",//首页封面图片
+        home_image:"",//首页封面图片
       }
     };
   },
@@ -35,16 +35,16 @@ export const useCounterStore = defineStore("indexContent", {
   actions: {
 
  //封面图片
- uploadImage(event){
+ async uploadImage(event){
   const file = event.target.files[0];
   const formData = new FormData();
   formData.append('image', file);
   // console.log(formData)
   axios.post('type/imgUp', formData)
     .then(res => {
-    console.log(res.data.data)
-     this.form.image = res.data.data.url;
-     console.log(this.form.image)
+    console.log(res.data.data.url)
+     this.form.home_image = res.data.data.url;
+     console.log(this.form.home_image)
     })
 },
 
@@ -61,9 +61,9 @@ export const useCounterStore = defineStore("indexContent", {
       if (res.status == 200) {
         console.log(res.data);
         this.tableData = res.data.data;
-        this.pagetota = res.data.total        ;
-        this.pagenum = res.data.current_page
-        ;
+        this.pagetota = res.data.total;
+        this.pagenum = res.data.current_page;
+        // this.home_image = res.data.current_page;
       }
     },
     //添加
@@ -89,6 +89,7 @@ export const useCounterStore = defineStore("indexContent", {
           type_id: this.form.type_id,
           essay_status: this.form.essay_status,
           essay_id: this.form.id,
+          home_image: this.form.home_image,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");

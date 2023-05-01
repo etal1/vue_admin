@@ -127,6 +127,7 @@ const upUserData = (row) =>{
         state.form.type_id=row.type_id,
         state.form.essay_status=row.essay_status,
         state.form.home_image=row.home_image,
+        state.form.essay_brief=row.essay_brief,
          row.essay_status ==1 ? state.form.delivery =true :state.form.delivery =false
         // state.form.essay_status=row.essay_status
       // state.form.email = row.email
@@ -144,6 +145,7 @@ const addUserData = (row) =>{
             essay_content:"",
             type_id:"",
             essay_status:"",
+            essay_brief:"",
             delivery:false
       }
   })
