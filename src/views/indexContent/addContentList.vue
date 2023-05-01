@@ -20,8 +20,8 @@
 
     <div>
           <input class="imgIcon" type="file" ref="fileInput" @change="store.uploadImage">
-          <div v-if="store.form.image">
-            <img :src="store.form.image" alt="Uploaded image" width="250" height="250">
+          <div v-if="store.form.home_image">
+            <img :src="store.form.home_image" alt="Uploaded image" width="250" height="250">
           </div>
     </div>
 
