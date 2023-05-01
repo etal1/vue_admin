@@ -68,6 +68,22 @@ export const useCounterStore = defineStore("orderLIst", {
         ;
       }
     },
+    async orderType() {
+      let { data: res } = await axios.get("/content/type", {
+        params: {
+          type_id: this.input1,
+          page: this.pagenum,
+          pageSize: this.pagesize
+        }
+      });
+      if (res.status == 200) {
+        console.log(res.data);
+        this.tableData = res.data.data;
+        this.pagetota = res.data.total        ;
+        this.pagenum = res.data.current_page
+        ;
+      }
+    },
     //添加
     async addDataContent() {
       let { data: res } = await axios.post("/content/add", this.form);
