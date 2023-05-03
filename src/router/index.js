@@ -10,6 +10,7 @@ let routes= [
       {path:"/userList",component: () => import('../views/useList/useList.vue')},
       {path:"/tagList",component: () => import('../views/tag/tag.vue')},
       {path:"/carousel",component: () => import('../views/carousel/carousel.vue')},
+      {path:"/comment",component: () => import('../views/comment/comment.vue')},
       {path:"/shopList",component: () => import('../views/shop/shopList.vue')},
       {path:"/contentList",component: () => import('../views/content/contentList.vue')},
       {path:"/contentList/add",component: () => import('../views/content/addContentList.vue')},

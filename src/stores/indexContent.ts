@@ -22,7 +22,7 @@ export const useCounterStore = defineStore("indexContent", {
         type_id:"",//类型
         essay_status:'',//是否发布是实际发送给数据库的
         delivery:false,//是否发布是页面展示
-        brief:"",
+        essay_brief:"",
         home_image:"",//首页封面图片
       }
     };
@@ -90,6 +90,7 @@ export const useCounterStore = defineStore("indexContent", {
           essay_status: this.form.essay_status,
           essay_id: this.form.id,
           home_image: this.form.home_image,
+          essay_brief:this.form.essay_brief,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");

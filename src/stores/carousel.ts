@@ -88,8 +88,9 @@ export const carouselStore = defineStore("carousel", {
         message: "数据修改成功",
         type: "success"
       });
-      this.carouseistl();
       this.dialogFormVsible = false;
+      this.carouselist();
+      
     },
     //删除
     async typeDel(id) {

@@ -1,0 +1,150 @@
+<template>
+    <div class="listBa"> 
+          <!-- 添加框 -->
+      <el-dialog v-model="store.dialogFormVsible" title="addUser">
+        <el-form :model="store.form">
+          <div>
+            <input class="imgIcon" type="file" ref="fileInput" @change="store.uploadImage  ">
+            <div v-if="store.form.img">
+              <img :src="store.form.img" alt="Uploaded image" width="250" height="250">
+            </div>
+          </div>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="store.$patch({dialogFormVsible : false})">Cancel</el-button>
+            <el-button type="primary" @click="isAddOrUpdata()">Confirm</el-button>
+          </span>
+        </template>
+      </el-dialog>
+      <!-- 列表内容 -->
+      <div class="list">
+        <el-table
+          ref="tableRef"
+          :data="store.tableData"
+          size="large"
+          :height="tableHeight"
+          style="width: 100%"
+        >
+          <el-table-column prop="id" label="ID" />
+          <el-table-column prop="img" label="图片" >
+            <template #default="scope">
+             <el-image
+              style="width: 100px; height: 100px"
+              :src="scope.row.img"
+              :zoom-rate="1.2"
+              :preview-src-list="[scope.row.img]"
+              :initial-index="4"
+              fit="cover"
+            />
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" align="center">
+            <template #default="scope">
+              <el-button size="small" type="danger" @click="DelUser(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <!-- 分页 -->
+      <div class="pagination mg-t20 mg-b10">
+        <el-pagination
+          background
+          :page-size="store.pagesize"
+          :pager-count="7"
+          v-model:current-page="store.pagenum"
+          layout="prev, pager, next"
+          :total="store.pagetota"
+          @current-change="carouselist()"
+        />
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { reactive, ref, onMounted } from "vue";
+  import {carouselStore} from "@/stores/carousel.ts"
+  const store = carouselStore();
+  // console.log(store)
+  const tableRef = ref(null); //表格自适应大小使用
+  const tableHeight = ref(); //表格自适应大小使用
+  onMounted(() => {
+    // 设置表格初始高度为innerHeight-offsetTop-表格底部与浏览器底部距离85
+    tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
+    // 监听浏览器高度变化
+    window.onresize = () => {
+      tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
+    };
+    carouselist();
+  });
+  let mess = reactive({});
+  const carouselist = async () => {
+      store.carouselist()
+  };
+  const isAddOrUpdata = async () => {
+    // 因为修改添加用同一组件所以判断提交时是添加还是修改
+    if(!store.addORup){
+        // console.log("添加")
+    store.addDataCarousel()
+    }else{
+     store.updataCarousel()
+    }
+  };
+  const DelUser =  (id) => {
+         ElMessageBox.confirm(
+      '确定要删除该类型吗?',
+      'Warning',
+      {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }
+    ) .then(() => {
+     store.typeDel(id)
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: 'Delete canceled',
+        })
+      })
+    // store.$patch({orderFormVsibles : true})
+    
+  };
+  const upUserData = (row) =>{
+    store.$patch(state =>{
+        state.addORup =true
+        state.dialogFormVsible = true
+        state.form.img = row.img
+        state.form.id = row.id
+    })
+    
+  }
+  const addUserData = (row) =>{
+      store.$patch(state =>{
+          state.addORup =false
+          state.dialogFormVsible = true
+            state.form = {
+            img:"",
+        }
+    })
+  
+  }
+  </script>
+  <style scoped>
+  .pagination .el-pagination {
+    display: flex;
+    justify-content: center;
+  }
+  .demo-image__error .image-slot {
+    font-size: 30px;
+  }
+  .demo-image__error .image-slot .el-icon {
+    font-size: 30px;
+  }
+  .demo-image__error .el-image {
+    width: 100%;
+    height: 200px;
+  }
+  </style>
+  
