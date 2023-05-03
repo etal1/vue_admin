@@ -7,7 +7,7 @@ export const commentStore = defineStore("comment", {
       list: 75,
       input1: "",
       pagenum: 1,
-      pagesize: 2,
+      pagesize: 10,
       pagetota: 0,
       tableData: [],
       activities: [],
@@ -15,8 +15,7 @@ export const commentStore = defineStore("comment", {
       orderFormVsibles: true,
       addORup: false,
       form: {
-        id: "",
-        img: "",
+        essay_id: "",
       }
     };
   },
@@ -26,11 +25,11 @@ export const commentStore = defineStore("comment", {
     }
   },
   actions: {
-    //获取列表
+    // 获取列表
     async carouselist() {
       let { data: res } = await axios.get("getcomment/all", {
         params: {
-          type_name: this.input1,
+          comment_content:this.form.essay_id,
           page: this.pagenum,
           pageSize: this.pagesize
         }
@@ -43,11 +42,12 @@ export const commentStore = defineStore("comment", {
       }
       
     },
+    // },
     //删除
     async typeDel(id) {
       // console.log(id+"sss");
       let { data: res } = await axios.get(
-       `carouselDel?id=${id}`
+       `delComment/${id}`
       );
       if (res.status != 200) {
         return ElMessage.error("获取失败失败");

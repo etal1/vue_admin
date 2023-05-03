@@ -1,5 +1,24 @@
 <template>
     <div class="listBa"> 
+      <div class="flex-row flex-js-spb mg-tb20 pd-lr20">
+      <div>
+        <span class="f30">总计：</span>
+        <span>{{store.pagetota}}条</span>
+      </div>
+      <div class="flex-row flex-lg-nowrap flex-al-center">
+        <el-input
+          v-model="store.form.essay_id"
+          class="w-50 m-2 mg-r10"
+          placeholder="Please Input"
+          clearable
+          @clear="carouselist()"
+        />
+        <el-button @click="carouselist()">Seach</el-button>
+      </div>
+      <div class>
+        <!-- <el-button type="success" @click="addUserData()">add</el-button> -->
+      </div>
+    </div>
           <!-- 添加框 -->
       <el-dialog v-model="store.dialogFormVsible" title="addUser">
         <el-form :model="store.form">
@@ -26,22 +45,12 @@
           :height="tableHeight"
           style="width: 100%"
         >
-          <el-table-column prop="id" label="ID" />
-          <el-table-column prop="img" label="图片" >
-            <template #default="scope">
-             <el-image
-              style="width: 100px; height: 100px"
-              :src="scope.row.img"
-              :zoom-rate="1.2"
-              :preview-src-list="[scope.row.img]"
-              :initial-index="4"
-              fit="cover"
-            />
-            </template>
-          </el-table-column>
+          <el-table-column prop="comment_id" label="ID" />
+          <el-table-column prop="comment_content" label="评论" />
+          <el-table-column prop="essay_id" label="文章ID" />
           <el-table-column label="操作" align="center">
             <template #default="scope">
-              <el-button size="small" type="danger" @click="DelUser(scope.row.id)">删除</el-button>
+              <el-button size="small" type="danger" @click="DelUser(scope.row.comment_id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -63,8 +72,8 @@
   
   <script setup>
   import { reactive, ref, onMounted } from "vue";
-  import {carouselStore} from "@/stores/carousel.ts"
-  const store = carouselStore();
+  import {commentStore} from "@/stores/comment.ts"
+  const store = commentStore();
   // console.log(store)
   const tableRef = ref(null); //表格自适应大小使用
   const tableHeight = ref(); //表格自适应大小使用
@@ -111,25 +120,25 @@
     // store.$patch({orderFormVsibles : true})
     
   };
-  const upUserData = (row) =>{
-    store.$patch(state =>{
-        state.addORup =true
-        state.dialogFormVsible = true
-        state.form.img = row.img
-        state.form.id = row.id
-    })
+  // const upUserData = (row) =>{
+  //   store.$patch(state =>{
+  //       state.addORup =true
+  //       state.dialogFormVsible = true
+  //       state.form.img = row.img
+  //       state.form.id = row.id
+  //   })
     
-  }
-  const addUserData = (row) =>{
-      store.$patch(state =>{
-          state.addORup =false
-          state.dialogFormVsible = true
-            state.form = {
-            img:"",
-        }
-    })
+  // }
+  // const addUserData = (row) =>{
+  //     store.$patch(state =>{
+  //         state.addORup =false
+  //         state.dialogFormVsible = true
+  //           state.form = {
+  //           img:"",
+  //       }
+  //   })
   
-  }
+  // }
   </script>
   <style scoped>
   .pagination .el-pagination {
