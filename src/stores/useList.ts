@@ -22,6 +22,7 @@ export const useCounterStore = defineStore("counter", {
         stu_id: "",
         personal_name: "",
         email:"",
+        user_profile:"",
       }
     };
   },
@@ -81,6 +82,7 @@ export const useCounterStore = defineStore("counter", {
           stu_id: this.form.stu_id,
           is_superuser: this.form.is_superuser,
           id:this.form.id,
+          user_profile:this.form.user_profile,
         }
       });
       if (res.status != 200) return ElMessage.error("修改失败");

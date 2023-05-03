@@ -6,7 +6,7 @@
         <span class="f30">总计：</span>
         <span>{{store.pagetota}}条</span>
       </div>
-      <div class="flex-row flex-lg-nowrap flex-al-center">
+      <!-- <div class="flex-row flex-lg-nowrap flex-al-center">
         <el-input
           v-model="store.input1"
           class="w-50 m-2 mg-r10"
@@ -15,7 +15,7 @@
           @clear="carouselist()"
         />
         <el-button @click="carouselist()">Seach</el-button>
-      </div>
+      </div> -->
       <div class>
         <el-button type="success" @click="addUserData()">add</el-button>
       </div>

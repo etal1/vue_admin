@@ -15,6 +15,7 @@
           @clear="orderList()"
         />
         <el-button @click="orderList()">Seach</el-button>
+        <el-button @click="orderType()">Seach</el-button>
       </div>
       <div class>
         <el-button type="success" @click="addUserData()">add</el-button>
@@ -86,6 +87,9 @@ onMounted(() => {
 let mess = reactive({});
 const orderList = async () => {
     store.orderList()
+};
+const orderType = async () => {
+    store.orderType()
 };
 const isAddOrUpdata = async () => {
   // 因为修改添加用同一组件所以判断提交时是添加还是修改

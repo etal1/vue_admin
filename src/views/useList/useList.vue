@@ -32,6 +32,9 @@
         <el-form-item label="密码" label-width="140px">
             <el-input v-model="store.form.password" autocomplete="off"/>
         </el-form-item>
+        <el-form-item label="简介" label-width="140px">
+            <el-input v-model="store.form.user_profile" autocomplete="off"/>
+        </el-form-item>
         <el-form-item label="权限">
           <el-radio-group v-model="store.form.is_superuser">
             <el-radio label="普通用户" />
@@ -171,6 +174,7 @@ const upUserData = (row) =>{
       state.form.stu_id = row.stu_id
       state.form.personal_name = row.personal_name
       state.form.id = row.id
+      state.form.user_profile = row.user_profile
   })
   
 }
@@ -186,6 +190,7 @@ const addUserData = (row) =>{
               is_superuser: "",
               stu_id: "",
               personal_name: "",
+              user_profile: "",
       }
   })
 
