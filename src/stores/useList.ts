@@ -7,7 +7,7 @@ export const useCounterStore = defineStore("counter", {
       list: 77,
       input1: "",
       pagenum: 1,
-      pagesize: 3,
+      pagesize: 7,
       pagetota: 0,
       tableData: [],
       dialogFormVsible: false,

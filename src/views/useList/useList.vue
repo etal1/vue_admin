@@ -75,7 +75,12 @@
       >
         <el-table-column prop="id" label="ID" width="70"/>
         <el-table-column prop="name" label="账号" />
-        <el-table-column prop="password" label="密码" />
+        <el-table-column prop="password" label="密码" >
+          <template #default="scope">
+              ******
+          </template>
+        </el-table-column>
+        <el-table-column prop="email" label="邮箱" />
         <el-table-column prop="is_superuser" label="权限" >
           <template #default="scope">
               {{scope.row.is_superuser == 1 ? '管理员' : '普通用户' }}
@@ -174,6 +179,7 @@ const upUserData = (row) =>{
       state.form.stu_id = row.stu_id
       state.form.personal_name = row.personal_name
       state.form.id = row.id
+      state.form.email = row.email
       state.form.user_profile = row.user_profile
   })
   
