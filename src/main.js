@@ -5,9 +5,22 @@ import App from './App.vue'
 import router from './router'
 import './assets/style.css' 
 axios.defaults.baseURL ="/api/laravel10.6.2/public"
+
+
+// axios.interceptors.request.use(config => {
+//     const token = Cookies.get('token');
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//     return config;
+//   });
+  
 axios.interceptors.request.use(config =>{
-    config.headers.Authorization ='Bearer' + window.sessionStorage.getItem("token")
-    return config
+    const token = window.sessionStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 })
 router.beforeEach((to,from,next) =>{
     if(to.path == "/login") return next()

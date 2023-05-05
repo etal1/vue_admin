@@ -61,7 +61,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
         :size="formSize"
         status-icon
       >
-        <el-form-item label="user name" prop="name">
+        <el-form-item label="user email" prop="name">
           <el-input v-model="ruleForm.email"/>
         </el-form-item>
         <el-form-item label="password" prop="password">

@@ -44,6 +44,7 @@
         <el-button>返回</el-button>
       </el-form-item>
     </el-form>
+    <div class="navs"></div>
   </div>
 </template>
 

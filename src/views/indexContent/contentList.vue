@@ -11,7 +11,7 @@
         <el-input
           v-model="store.input1"
           class="w-50 m-2 mg-r10"
-          placeholder="Please Input"
+          placeholder="请输入标题"
           clearable
           @clear="orderList()"
         />
@@ -33,7 +33,7 @@
       >
         <el-table-column prop="essay_id" label="ID" width="70"/>
         <el-table-column prop="essay_title" label="文章标题" />
-        <el-table-column prop="userid" label="创建文章ID"/>
+        <el-table-column prop="id" label="创建文章ID"/>
         <el-table-column prop="essay_status" label="是否发布" >
           <template #default="scope">
               <el-tag class="ml-2" type="success" v-if="scope.row.essay_status == 1">已发布</el-tag>

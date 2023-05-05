@@ -10,7 +10,7 @@
         <el-input
           v-model="store.input1"
           class="w-50 m-2 mg-r10"
-          placeholder="Please Input"
+          placeholder="请输入标签"
           clearable
           @clear="typeList()"
         />

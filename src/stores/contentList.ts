@@ -87,8 +87,8 @@ export const useCounterStore = defineStore("orderLIst", {
     //添加
     async addDataContent() {
       let { data: res } = await axios.post("/content/add", this.form);
-      if (res.status != 200) {
-        return ElMessage.error("Oops, this is a error message.");
+      if (!res.status) {
+        return ElMessage.error("数据添加失败");
       }
       ElMessage({
         message: "数据添加成功",

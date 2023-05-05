@@ -9,7 +9,7 @@
         <el-input
           v-model="store.form.essay_id"
           class="w-50 m-2 mg-r10"
-          placeholder="Please Input"
+          placeholder="请输入标题"
           clearable
           @clear="carouselist()"
         />
